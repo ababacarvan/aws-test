@@ -10,24 +10,23 @@ phases:
       - source venv/bin/activate
       - pip install --upgrade pip
       - pip install -r requirements.txt || true
+      - pip install pytest pytest-cov
 
   pre_build:
     commands:
-      - echo "Pré-build : vérification environnement"
+      - echo "Pré-build"
       - python --version
       - pip --version
+      - mkdir -p reports
 
   build:
     commands:
-      - echo "Lancement des tests avec rapport"
-      - pytest \
-        --junitxml=reports/junit-report.xml \
-        --cov=. \
-        --cov-report=xml:reports/coverage.xml
+      - echo "Lancement des tests"
+      - pytest --junitxml=reports/junit-report.xml --cov=. --cov-report=xml:reports/coverage.xml
 
   post_build:
     commands:
-      - echo "Tests terminés"
+      - echo "Build terminé"
 
 reports:
   pytest-report:
