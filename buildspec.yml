@@ -1,0 +1,41 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.8
+    commands:
+      - echo "Installation des dépendances"
+      - python -m venv venv
+      - source venv/bin/activate
+      - pip install --upgrade pip
+      - pip install -r requirements.txt || true
+
+  pre_build:
+    commands:
+      - echo "Pré-build : vérification environnement"
+      - python --version
+      - pip --version
+
+  build:
+    commands:
+      - echo "Lancement des tests avec rapport"
+      - pytest \
+        --junitxml=reports/junit-report.xml \
+        --cov=. \
+        --cov-report=xml:reports/coverage.xml
+
+  post_build:
+    commands:
+      - echo "Tests terminés"
+
+reports:
+  pytest-report:
+    files:
+      - junit-report.xml
+    base-directory: reports
+    file-format: JUNITXML
+
+artifacts:
+  files:
+    - reports/**/*
