@@ -5,7 +5,7 @@ from app import hello, calcule, say_hello
 class TestApp(unittest.TestCase):
 
     def test_hello(self):
-        self.assertEqual(say_hello("Ababacar"), "Bonjour Ababacar 👋")
+        self.assertEqual(hello("Ababacar"), "Bonjour Ababacar 👋")
 
     def test_calcule(self):
         self.assertEqual(calcule(2, 3), 5)
